@@ -2,12 +2,12 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
 function AddSubBtn(props) {
-    const [pizzaCount, setPizzaCount] = useState(1);
+    const [pizzaCount, setPizzaCount] = useState(0);
 
     useEffect(() => {
         if (props.val !== "undefined") {
             setPizzaCount(props.val);
-            console.log(props.val);
+            // console.log(props.val);
         }
     }, [props.val])
 
@@ -37,7 +37,7 @@ function AddSubBtn(props) {
                     <span onClick={handleClick} name="minus" className="adminminus" >
                         —
                     </span>
-                    {pizzaCount}
+                    {pizzaCount==0? props.val:pizzaCount}
                     <span onClick={handleClick} name='plus' className="adminplus">
                         +
                     </span>

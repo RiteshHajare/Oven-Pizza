@@ -24,7 +24,7 @@ app.use(session({
   cookie:{maxAge:nextDay}
 }))
 
-mongoose.connect("mongodb://localhost:27017/pizzaDB");
+mongoose.connect(process.env.MONGOURI);
 
 
 var UserSchema = new mongoose.Schema({
@@ -48,21 +48,21 @@ var OrderSchema = new mongoose.Schema({
 
 var CustomSchema = new mongoose.Schema({
   key:{type:Number,default:1},
-  base1:{type:Number,default:1},
-  base2:{type:Number,default:1},
-  base3:{type:Number,default:1},
-  base4:{type:Number,default:1},
-  base5:{type:Number,default:1},
-  sauce1:{type:Number,default:1},
-  sauce2:{type:Number,default:1},
-  sauce3:{type:Number,default:1},
-  sauce4:{type:Number,default:1},
-  sauce5:{type:Number,default:1},
-  cheese1:{type:Number,default:1},
-  cheese2:{type:Number,default:1},
-  veggies1:{type:Number,default:1},
-  veggies2:{type:Number,default:1},
-  veggies3:{type:Number,default:1}
+  base1:{type:Number,default:10},
+  base2:{type:Number,default:10},
+  base3:{type:Number,default:10},
+  base4:{type:Number,default:10},
+  base5:{type:Number,default:10},
+  sauce1:{type:Number,default:10},
+  sauce2:{type:Number,default:10},
+  sauce3:{type:Number,default:10},
+  sauce4:{type:Number,default:10},
+  sauce5:{type:Number,default:10},
+  cheese1:{type:Number,default:10},
+  cheese2:{type:Number,default:10},
+  veggies1:{type:Number,default:10},
+  veggies2:{type:Number,default:10},
+  veggies3:{type:Number,default:10}
 })
 
 UserSchema.plugin(passportLocalMongoose);
@@ -80,58 +80,30 @@ passport.use(new LocalStrategy(User.authenticate()));
 
 app.post('/register', function(req, res) {
 
-  const createTransporter = async () => {
-    const oauth2Client = new OAuth2(
-      process.env.CLIENT_ID,
-      process.env.CLIENT_SECRET,
-      "https://developers.google.com/oauthplayground"
-    );
-
-    oauth2Client.setCredentials({
-      refresh_token: process.env.REFRESH_TOKEN
-    });
-
-    const accessToken = await new Promise((resolve, reject) => {
-      oauth2Client.getAccessToken((err, token) => {
-        if (err) {
-          reject("Failed to create access token "+err);
-        }
-        resolve(token);
-      });
-    });
-
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        type: "OAuth2",
-        user: process.env.EMAIL,
-        accessToken,
-        clientId: process.env.CLIENT_ID,
-        clientSecret: process.env.CLIENT_SECRET,
-        refreshToken: process.env.REFRESH_TOKEN
-      }
-    });
-
-    return transporter;
-  };
-
-  const sendEmail = async (emailOptions) => {
-    try {
-      let emailTransporter = await createTransporter();
-      await emailTransporter.sendMail(emailOptions);
-
-    } catch (e) {
-      console.log(e);
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'testmail19253@gmail.com',
+      pass: process.env.MY_PASS
     }
-
-  };
-   val = Math.floor(1000 + Math.random() * 9000);
-   val=String(val);
-  sendEmail({
-    subject: "One Time Password(OTP)",
-    html: val,
+  });
+  val = Math.floor(1000 + Math.random() * 9000);
+  val=String(val);
+  var mailOptions = {
+    from: process.env.EMAIL,
     to: req.body.email,
-    from: process.env.EMAIL
+    subject: "One Time Password(OTP)",
+    text: val
+  };
+    
+   
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+      // res.status(200).json({success:true,message:"User can be verified with email otp."});
+    }
   });
 
     Users=new User({email: req.body.email, username : req.body.username});
