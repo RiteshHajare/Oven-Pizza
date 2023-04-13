@@ -78,7 +78,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 passport.use(new LocalStrategy(User.authenticate()));
 
-app.post('https://ovenpizza-backend.onrender.com/register', function(req, res) {
+app.post('/register', function(req, res) {
 
   var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -116,7 +116,7 @@ app.post('https://ovenpizza-backend.onrender.com/register', function(req, res) {
           });
 });
 
-app.post("https://ovenpizza-backend.onrender.com/checkotp",(req,res)=>{
+app.post("/checkotp",(req,res)=>{
   if(req.body.otp===val){
     res.json({success:true,message:"logUser"})
   }else{
@@ -124,7 +124,7 @@ app.post("https://ovenpizza-backend.onrender.com/checkotp",(req,res)=>{
   }
 })
 
-app.post("https://ovenpizza-backend.onrender.com/removeuser",(req,res)=>{
+app.post("/removeuser",(req,res)=>{
   _id = req.body.userID;
   console.log(_id);
   User.findByIdAndDelete(_id, function (err, docs) {
@@ -141,7 +141,7 @@ app.post("https://ovenpizza-backend.onrender.com/removeuser",(req,res)=>{
 
 
 
-app.post('https://ovenpizza-backend.onrender.com/login', (req, res, next) => {
+app.post('/login', (req, res, next) => {
   passport.authenticate('local',
   (err, user, info) => {
     if (err) {
@@ -175,7 +175,7 @@ app.post('https://ovenpizza-backend.onrender.com/login', (req, res, next) => {
   })(req, res);
 });
 
-app.post("https://ovenpizza-backend.onrender.com/userorder",(req,res)=>{
+app.post("/userorder",(req,res)=>{
   const{username,pizza,quantity,totalPrice} = req.body;
   // console.log(username,pizza,quantity,totalPrice);
   User.findOne({username},(err,user)=>{
@@ -192,7 +192,7 @@ app.post("https://ovenpizza-backend.onrender.com/userorder",(req,res)=>{
   });
 });
 
-app.post("https://ovenpizza-backend.onrender.com/cart",(req,res)=>{
+app.post("/cart",(req,res)=>{
   const{username} = req.body;
 
   User.findOne({username},(err,user)=>{
@@ -201,7 +201,7 @@ app.post("https://ovenpizza-backend.onrender.com/cart",(req,res)=>{
   })
 })
 
-app.post("https://ovenpizza-backend.onrender.com/removefromcartt",(req,res)=>{
+app.post("/removefromcartt",(req,res)=>{
   const{username,_id} = req.body;
 
   User.findOne({username},(err,user)=>{
@@ -220,7 +220,7 @@ app.post("https://ovenpizza-backend.onrender.com/removefromcartt",(req,res)=>{
 
 })
 
-app.post("https://ovenpizza-backend.onrender.com/addtoorders",(req,res)=>{
+app.post("/addtoorders",(req,res)=>{
   const{username,_id} = req.body;
 
   User.findOne({username},(err,user)=>{
@@ -258,7 +258,7 @@ app.post("https://ovenpizza-backend.onrender.com/addtoorders",(req,res)=>{
 
 });
 
-app.post("https://ovenpizza-backend.onrender.com/getorders",(req,res)=>{
+app.post("/getorders",(req,res)=>{
   const username = req.body.username;
   // User.findOne({username},(err,user)=>{
   //   res.json(user.orders);
@@ -270,7 +270,7 @@ app.post("https://ovenpizza-backend.onrender.com/getorders",(req,res)=>{
   })
 })
 
-app.post("https://ovenpizza-backend.onrender.com/custompizzacart",(req,res)=>{
+app.post("/custompizzacart",(req,res)=>{
   const{pizza, username, base, sauce, cheese, veggies, totalPrice, quantity } = req.body;
 
   User.findOne({username},(err,user)=>{
@@ -285,7 +285,7 @@ app.post("https://ovenpizza-backend.onrender.com/custompizzacart",(req,res)=>{
 
 })
 
-app.get("https://ovenpizza-backend.onrender.com/getallorders",(req,res)=>{
+app.get("/getallorders",(req,res)=>{
   Order.find({})
   .then((orders)=>{
     if(orders){
@@ -299,7 +299,7 @@ app.get("https://ovenpizza-backend.onrender.com/getallorders",(req,res)=>{
   })
 })
 
-app.post("https://ovenpizza-backend.onrender.com/changestatus",(req,res)=>{
+app.post("/changestatus",(req,res)=>{
   const {status,_id} =  req.body;
 // console.log(_id);
   Order.findOne({_id},(err,order)=>{
@@ -316,7 +316,7 @@ if(err){
   })
 })
 
-app.post("https://ovenpizza-backend.onrender.com/changecustomitems",(req,res)=>{
+app.post("/changecustomitems",(req,res)=>{
   var makeobj = false;
   const {pizzaCount,custom} = req.body;
   // console.log(pizzaCount,custom);
@@ -390,13 +390,13 @@ app.post("https://ovenpizza-backend.onrender.com/changecustomitems",(req,res)=>{
 
 })
 
-app.get("https://ovenpizza-backend.onrender.com/getcount",(req,res)=>{
+app.get("/getcount",(req,res)=>{
   CustomPizz.findOne({key:1},(err,doc)=>{
     res.send(doc);
   })
 })
 
-app.post("https://ovenpizza-backend.onrender.com/minuscustom",(req,res)=>{
+app.post("/minuscustom",(req,res)=>{
   const {val} = req.body;
   var ifTrue = false;
   var ofs="" ;
@@ -517,7 +517,7 @@ if(ifTrue){
 })
 
 
-app.get("https://ovenpizza-backend.onrender.com/logout",function(req,res){
+app.get("/logout",function(req,res){
 
   req.logout(function(err) {
      if (!err) { res.send("Successfully Logout"); }
