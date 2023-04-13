@@ -10,6 +10,7 @@ const nodemailer = require('nodemailer');
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 const LocalStrategy = require('passport-local').Strategy;
+// const {User,UserSchema} = require("./user");
 var val;
 
 const app = express();
@@ -24,9 +25,9 @@ app.use(session({
 }))
 
 mongoose.connect("mongodb://localhost:27017/pizzaDB");
-var Schema = mongoose.Schema;
 
-var UserSchema = new Schema({
+
+var UserSchema = new mongoose.Schema({
     email: {type: String, required:true, unique:true},
     username : {type: String, unique: true, required:true},
     cart:[{pizza:String,quantity:Number,username:String,base:String,sauce:String,cheese:String,veggies:String,totalPrice:Number}],
@@ -93,7 +94,7 @@ app.post('/register', function(req, res) {
     const accessToken = await new Promise((resolve, reject) => {
       oauth2Client.getAccessToken((err, token) => {
         if (err) {
-          reject("Failed to create access token :(");
+          reject("Failed to create access token "+err);
         }
         resolve(token);
       });
