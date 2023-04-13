@@ -11,7 +11,7 @@ function AdminVeggies() {
         if (user != "Ritesh") {
             navigate("../login", { replace: true });
         }
-        axios.get("http://localhost:4000/getcount")
+        axios.get("https://ovenpizza-backend.onrender.com/getcount")
             .then((res) => {
                 setVal(res.data);
                 // console.log(res.data.base1);

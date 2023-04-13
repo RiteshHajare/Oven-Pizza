@@ -29,7 +29,7 @@ function Base() {
         if (username === null) {
             navigate("/", { replace: true });
         }
-        axios.get("http://localhost:4000/getcount")
+        axios.get("https://ovenpizza-backend.onrender.com/getcount")
             .then((res) => {
                 setVal(res.data);
                 console.log(res.data.base1);
@@ -67,7 +67,7 @@ function Base() {
 
     function toroot() {
         const custompizza = { pizza: "Enjoy your Custom Pizza", username, base, sauce, cheese, veggies, totalPrice: price, quantity: 1 }
-        axios.post("http://localhost:4000/custompizzacart", custompizza);
+        axios.post("https://ovenpizza-backend.onrender.com/custompizzacart", custompizza);
 
         navigate("../", { replace: true });
     }
@@ -85,23 +85,23 @@ function Base() {
         switch (base) {
             case "CheeseBurst":
                 setprice((prev) => prev + 155);
-                axios.post("http://localhost:4000/minuscustom", { val: "base1" });
+                axios.post("https://ovenpizza-backend.onrender.com/minuscustom", { val: "base1" });
                 break;
             case "Dough":
                 setprice((prev) => prev + 145);
-                axios.post("http://localhost:4000/minuscustom", { val: "base2" });
+                axios.post("https://ovenpizza-backend.onrender.com/minuscustom", { val: "base2" });
                 break;
             case "MiniPizza":
                 setprice((prev) => prev + 150);
-                axios.post("http://localhost:4000/minuscustom", { val: "base3" });
+                axios.post("https://ovenpizza-backend.onrender.com/minuscustom", { val: "base3" });
                 break;
             case "Plane":
                 setprice((prev) => prev + 135);
-                axios.post("http://localhost:4000/minuscustom", { val: "base4" });
+                axios.post("https://ovenpizza-backend.onrender.com/minuscustom", { val: "base4" });
                 break;
             case "ThinCrust":
                 setprice((prev) => prev + 125);
-                axios.post("http://localhost:4000/minuscustom", { val: "base5" });
+                axios.post("https://ovenpizza-backend.onrender.com/minuscustom", { val: "base5" });
                 break;
             default:
                 console.log(base);
@@ -109,23 +109,23 @@ function Base() {
         switch (sauce) {
             case "Buffalo":
                 setprice((prev) => prev + 50);
-                axios.post("http://localhost:4000/minuscustom", { val: "sauce1" });
+                axios.post("https://ovenpizza-backend.onrender.com/minuscustom", { val: "sauce1" });
                 break;
             case "GarlicRanche":
                 setprice((prev) => prev + 60);
-                axios.post("http://localhost:4000/minuscustom", { val: "sauce2" });
+                axios.post("https://ovenpizza-backend.onrender.com/minuscustom", { val: "sauce2" });
                 break;
             case "Hummus":
                 setprice((prev) => prev + 75);
-                axios.post("http://localhost:4000/minuscustom", { val: "sauce3" });
+                axios.post("https://ovenpizza-backend.onrender.com/minuscustom", { val: "sauce3" });
                 break;
             case "Marinara":
                 setprice((prev) => prev + 55);
-                axios.post("http://localhost:4000/minuscustom", { val: "sauce4" });
+                axios.post("https://ovenpizza-backend.onrender.com/minuscustom", { val: "sauce4" });
                 break;
             case "Pesto":
                 setprice((prev) => prev + 60);
-                axios.post("http://localhost:4000/minuscustom", { val: "sauce5" });
+                axios.post("https://ovenpizza-backend.onrender.com/minuscustom", { val: "sauce5" });
                 break;
             default:
                 console.log(sauce);
@@ -134,11 +134,11 @@ function Base() {
         switch (cheese) {
             case "Mozzarella":
                 setprice((prev) => prev + 50);
-                axios.post("http://localhost:4000/minuscustom", { val: "cheese1" });
+                axios.post("https://ovenpizza-backend.onrender.com/minuscustom", { val: "cheese1" });
                 break;
             case "Cheddar":
                 setprice((prev) => prev + 35);
-                axios.post("http://localhost:4000/minuscustom", { val: "cheese2" });
+                axios.post("https://ovenpizza-backend.onrender.com/minuscustom", { val: "cheese2" });
                 break;
             default:
                 console.log(cheese);
@@ -147,15 +147,15 @@ function Base() {
         switch (veggies) {
             case "BellPeppers":
                 setprice((prev) => prev + 55);
-                axios.post("http://localhost:4000/minuscustom", { val: "veggies1" });
+                axios.post("https://ovenpizza-backend.onrender.com/minuscustom", { val: "veggies1" });
                 break;
             case "EggPlant":
                 setprice((prev) => prev + 45);
-                axios.post("http://localhost:4000/minuscustom", { val: "veggies2" });
+                axios.post("https://ovenpizza-backend.onrender.com/minuscustom", { val: "veggies2" });
                 break;
             case "YellowSquash":
                 setprice((prev) => prev + 60);
-                axios.post("http://localhost:4000/minuscustom", { val: "veggies3" });
+                axios.post("https://ovenpizza-backend.onrender.com/minuscustom", { val: "veggies3" });
                 break;
             default:
                 console.log(veggies);

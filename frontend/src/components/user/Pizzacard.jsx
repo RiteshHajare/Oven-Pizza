@@ -35,7 +35,7 @@ function Pizzacard(props) {
 
         const order = { username, pizza: props.name, quantity: pizzaCount, totalPrice: price };
         alert("Added to Cart.");
-        axios.post("http://localhost:4000/userorder", order)
+        axios.post("https://ovenpizza-backend.onrender.com/userorder", order)
             .then((res) => {
                 console.log(res.data);
             })

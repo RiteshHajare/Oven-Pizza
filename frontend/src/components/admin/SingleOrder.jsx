@@ -11,8 +11,8 @@ function SingleOrder(props) {
         const _id = props.order._id;
 
         const status = event.target.className;
-        console.log("truiggered");
-        axios.post("http://localhost:4000/changestatus", { status, _id });
+        
+        axios.post("https://ovenpizza-backend.onrender.com/changestatus", { status, _id });
 
         // window.location.reload(true);
     }

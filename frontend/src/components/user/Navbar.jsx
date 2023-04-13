@@ -8,7 +8,7 @@ function Navbar(props) {
     // console.log(user);
 
     function handleLogout() {
-        axios.get("http://localhost:4000/logout")
+        axios.get("https://ovenpizza-backend.onrender.com/logout")
             .then(function (res) {
                 console.log(res.data);
             });

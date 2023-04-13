@@ -25,7 +25,7 @@ function Login() {
             return;
         }
 
-        axios.post("http://localhost:4000/login", logUser)
+        axios.post("https://ovenpizza-backend.onrender.com/login", logUser)
             .then((response) => {
 
                 console.log(response.data);

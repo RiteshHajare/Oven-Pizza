@@ -15,7 +15,7 @@ function AdminPage() {
             navigate("../login", { replace: true });
         }
 
-        axios.get("http://localhost:4000/getallorders")
+        axios.get("https://ovenpizza-backend.onrender.com/getallorders")
             .then((res) => {
                 // console.log(res.data);
                 setOrders(res.data.reverse());

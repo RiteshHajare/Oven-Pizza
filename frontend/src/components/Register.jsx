@@ -54,7 +54,7 @@ function Register() {
             return;
         }
 
-        axios.post("http://localhost:4000/register", registerUser)
+        axios.post("https://ovenpizza-backend.onrender.com/register", registerUser)
             .then((response) => {
 
                 console.log(response.data);
@@ -82,7 +82,7 @@ function Register() {
 
     function handleSubmit() {
         // console.log(typeof otp);
-        axios.post("http://localhost:4000/checkotp", { otp })
+        axios.post("https://ovenpizza-backend.onrender.com/checkotp", { otp })
             .then((res) => {
                 settakeToLogin(res.data.success);
 
@@ -93,7 +93,7 @@ function Register() {
         if (takeToLogin === true) {
             navigate("../login", { replace: true });
         } else if (takeToLogin === false) {
-            axios.post("http://localhost:4000/removeuser", { userID })
+            axios.post("https://ovenpizza-backend.onrender.com/removeuser", { userID })
                 .then((res) => {
                     console.log(res.data);
                     seterr(res.data.message);

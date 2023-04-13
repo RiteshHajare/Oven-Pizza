@@ -7,7 +7,7 @@ function Cart() {
     const username = localStorage.getItem("username");
     const [cartArr, setCartArr] = useState([]);
     useEffect(() => {
-        axios.post("http://localhost:4000/cart", { username })
+        axios.post("https://ovenpizza-backend.onrender.com/cart", { username })
             .then((res) => {
                 // console.log(res.data);
                 setCartArr(res.data);
@@ -19,13 +19,13 @@ function Cart() {
 
         function handleClick() {
             const _id = oneCart._id;
-            axios.post("http://localhost:4000/removefromcartt", { _id, username });
+            axios.post("https://ovenpizza-backend.onrender.com/removefromcartt", { _id, username });
             window.location.reload(true);
         }
 
         function btnClick2() {
             const _id = oneCart._id;
-            axios.post("http://localhost:4000/addtoorders", { _id, username });
+            axios.post("https://ovenpizza-backend.onrender.com/addtoorders", { _id, username });
             window.location.reload(true);
         }
 

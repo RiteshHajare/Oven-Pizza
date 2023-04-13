@@ -10,7 +10,7 @@ function Orders() {
     const [orderArr, setOrderArr] = useState([]);
 
     useEffect(() => {
-        axios.post("http://localhost:4000/getorders", { username })
+        axios.post("https://ovenpizza-backend.onrender.com/getorders", { username })
             .then((res) => {
                 // console.log(res.data);
                 setOrderArr(res.data.reverse());

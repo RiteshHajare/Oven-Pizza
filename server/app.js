@@ -78,7 +78,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 passport.use(new LocalStrategy(User.authenticate()));
 
-app.post('/register', function(req, res) {
+app.post('https://ovenpizza-backend.onrender.com/register', function(req, res) {
 
   var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -116,7 +116,7 @@ app.post('/register', function(req, res) {
           });
 });
 
-app.post("/checkotp",(req,res)=>{
+app.post("https://ovenpizza-backend.onrender.com/checkotp",(req,res)=>{
   if(req.body.otp===val){
     res.json({success:true,message:"logUser"})
   }else{
@@ -124,7 +124,7 @@ app.post("/checkotp",(req,res)=>{
   }
 })
 
-app.post("/removeuser",(req,res)=>{
+app.post("https://ovenpizza-backend.onrender.com/removeuser",(req,res)=>{
   _id = req.body.userID;
   console.log(_id);
   User.findByIdAndDelete(_id, function (err, docs) {
@@ -141,7 +141,7 @@ app.post("/removeuser",(req,res)=>{
 
 
 
-app.post('/login', (req, res, next) => {
+app.post('https://ovenpizza-backend.onrender.com/login', (req, res, next) => {
   passport.authenticate('local',
   (err, user, info) => {
     if (err) {
@@ -175,7 +175,7 @@ app.post('/login', (req, res, next) => {
   })(req, res);
 });
 
-app.post("/userorder",(req,res)=>{
+app.post("https://ovenpizza-backend.onrender.com/userorder",(req,res)=>{
   const{username,pizza,quantity,totalPrice} = req.body;
   // console.log(username,pizza,quantity,totalPrice);
   User.findOne({username},(err,user)=>{
@@ -192,7 +192,7 @@ app.post("/userorder",(req,res)=>{
   });
 });
 
-app.post("/cart",(req,res)=>{
+app.post("https://ovenpizza-backend.onrender.com/cart",(req,res)=>{
   const{username} = req.body;
 
   User.findOne({username},(err,user)=>{
@@ -201,7 +201,7 @@ app.post("/cart",(req,res)=>{
   })
 })
 
-app.post("/removefromcartt",(req,res)=>{
+app.post("https://ovenpizza-backend.onrender.com/removefromcartt",(req,res)=>{
   const{username,_id} = req.body;
 
   User.findOne({username},(err,user)=>{
@@ -220,7 +220,7 @@ app.post("/removefromcartt",(req,res)=>{
 
 })
 
-app.post("/addtoorders",(req,res)=>{
+app.post("https://ovenpizza-backend.onrender.com/addtoorders",(req,res)=>{
   const{username,_id} = req.body;
 
   User.findOne({username},(err,user)=>{
@@ -258,7 +258,7 @@ app.post("/addtoorders",(req,res)=>{
 
 });
 
-app.post("/getorders",(req,res)=>{
+app.post("https://ovenpizza-backend.onrender.com/getorders",(req,res)=>{
   const username = req.body.username;
   // User.findOne({username},(err,user)=>{
   //   res.json(user.orders);
@@ -270,7 +270,7 @@ app.post("/getorders",(req,res)=>{
   })
 })
 
-app.post("/custompizzacart",(req,res)=>{
+app.post("https://ovenpizza-backend.onrender.com/custompizzacart",(req,res)=>{
   const{pizza, username, base, sauce, cheese, veggies, totalPrice, quantity } = req.body;
 
   User.findOne({username},(err,user)=>{
@@ -285,7 +285,7 @@ app.post("/custompizzacart",(req,res)=>{
 
 })
 
-app.get("/getallorders",(req,res)=>{
+app.get("https://ovenpizza-backend.onrender.com/getallorders",(req,res)=>{
   Order.find({})
   .then((orders)=>{
     if(orders){
@@ -299,7 +299,7 @@ app.get("/getallorders",(req,res)=>{
   })
 })
 
-app.post("/changestatus",(req,res)=>{
+app.post("https://ovenpizza-backend.onrender.com/changestatus",(req,res)=>{
   const {status,_id} =  req.body;
 // console.log(_id);
   Order.findOne({_id},(err,order)=>{
@@ -316,7 +316,7 @@ if(err){
   })
 })
 
-app.post("/changecustomitems",(req,res)=>{
+app.post("https://ovenpizza-backend.onrender.com/changecustomitems",(req,res)=>{
   var makeobj = false;
   const {pizzaCount,custom} = req.body;
   // console.log(pizzaCount,custom);
@@ -390,13 +390,13 @@ app.post("/changecustomitems",(req,res)=>{
 
 })
 
-app.get("/getcount",(req,res)=>{
+app.get("https://ovenpizza-backend.onrender.com/getcount",(req,res)=>{
   CustomPizz.findOne({key:1},(err,doc)=>{
     res.send(doc);
   })
 })
 
-app.post("/minuscustom",(req,res)=>{
+app.post("https://ovenpizza-backend.onrender.com/minuscustom",(req,res)=>{
   const {val} = req.body;
   var ifTrue = false;
   var ofs="" ;
@@ -484,65 +484,40 @@ app.post("/minuscustom",(req,res)=>{
 doc.save();
 
 if(ifTrue){
-  const createTransporter = async () => {
-    const oauth2Client = new OAuth2(
-      process.env.CLIENT_ID,
-      process.env.CLIENT_SECRET,
-      "https://developers.google.com/oauthplayground"
-    );
-
-    oauth2Client.setCredentials({
-      refresh_token: process.env.REFRESH_TOKEN
-    });
-
-    const accessToken = await new Promise((resolve, reject) => {
-      oauth2Client.getAccessToken((err, token) => {
-        if (err) {
-          reject("Failed to create access token :(");
-        }
-        resolve(token);
-      });
-    });
-
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        type: "OAuth2",
-        user: process.env.EMAIL,
-        accessToken,
-        clientId: process.env.CLIENT_ID,
-        clientSecret: process.env.CLIENT_SECRET,
-        refreshToken: process.env.REFRESH_TOKEN
-      }
-    });
-
-    return transporter;
-  };
-
-  const sendEmail = async (emailOptions) => {
-    try {
-      let emailTransporter = await createTransporter();
-      await emailTransporter.sendMail(emailOptions);
-
-    } catch (e) {
-      console.log(e);
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'testmail19253@gmail.com',
+      pass: process.env.MY_PASS
     }
-
-  };
-
-  sendEmail({
-    subject: "Alert",
-    html: ofs + "<span> getting Out Of Stock</span>",
-    to: process.env.MY_EMAIL,
-    from: process.env.EMAIL
   });
+  val = Math.floor(1000 + Math.random() * 9000);
+  val=String(val);
+  var mailOptions = {
+    from: process.env.EMAIL,
+    to: process.env.MY_EMAIL,
+    subject: "Alert",
+    html: ofs + "<span> getting Out Of Stock</span>"
+  };
+    
+   
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Alert sent: ' + info.response);
+      // res.status(200).json({success:true,message:"User can be verified with email otp."});
+    }
+  });
+
+
 }
 
   })
 })
 
 
-app.get("/logout",function(req,res){
+app.get("https://ovenpizza-backend.onrender.com/logout",function(req,res){
 
   req.logout(function(err) {
      if (!err) { res.send("Successfully Logout"); }

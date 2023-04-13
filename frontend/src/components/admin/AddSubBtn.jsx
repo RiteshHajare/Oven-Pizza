@@ -17,13 +17,13 @@ function AddSubBtn(props) {
             console.log(pizzaCount + 1);
             setPizzaCount((prev) => prev + 1);
             const obj = { pizzaCount: pizzaCount + 1, custom: props.custom };
-            axios.post("http://localhost:4000/changecustomitems", obj);
+            axios.post("https://ovenpizza-backend.onrender.com/changecustomitems", obj);
         } else if (e.target.className === "adminminus") {
             if (pizzaCount == 1) return;
             console.log(pizzaCount - 1);
             setPizzaCount((prev) => prev - 1);
             const obj = { pizzaCount: pizzaCount - 1, custom: props.custom };
-            axios.post("http://localhost:4000/changecustomitems", obj);
+            axios.post("https://ovenpizza-backend.onrender.com/changecustomitems", obj);
         }
 
 
